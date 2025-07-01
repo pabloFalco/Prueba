@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Your Roadblock - Finally Understanding</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #2c2c2c;
+            background: #f8f9ff;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #4a5568;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #4a5568;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: #4a5568;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            border-top: 1px solid #e2e8f0;
+            z-index: 999;
+        }
+
+        .mobile-menu.show {
+            display: block;
+        }
+
+        .mobile-menu a {
+            display: block;
+            padding: 1rem 1.5rem;
+            text-decoration: none;
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 120px 0 60px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: white;
+            padding: 20px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            width: 10%;
+            transition: width 0.5s ease;
+            border-radius: 4px;
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #4a5568;
+        }
+
+        /* Assessment Content */
+        .assessment-container {
+            background: white;
+            padding: 40px 0 60px;
+        }
+
+        .question-container {
+            display: none;
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .question-container.active {
+            display: block;
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        .question-number {
+            color: #667eea;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .question-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .question-description {
+            font-size: 1rem;
+            color: #4a5568;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .options-container {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .option {
+            padding: 1.2rem;
+            background: #f8f9ff;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .option.selected {
+            border-color: #667eea;
+            background: #f0f4ff;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+
+        .option-label {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 0.3rem;
+        }
+
+        .option-description {
+            font-size: 0.9rem;
+            color: #4a5568;
+            line-height: 1.4;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e0;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Results Section */
+        .results-container {
+            display: none;
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        .results-container.active {
+            display: block;
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        .results-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .results-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #2d3748;
+            margin-bottom: 1rem;
+        }
+
+        .results-subtitle {
+            font-size: 1.1rem;
+            color: #4a5568;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .roadblock-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+            text-align: left;
+        }
+
+        .roadblock-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .roadblock-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            opacity: 0.95;
+        }
+
+        .secondary-barriers {
+            background: #f8f9ff;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            text-align: left;
+        }
+
+        .secondary-barriers h3 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+        }
+
+        .secondary-barriers ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .secondary-barriers li {
+            padding: 0.5rem 0;
+            color: #4a5568;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .secondary-barriers li:before {
+            content: "⚠️";
+            position: absolute;
+            left: 0;
+        }
+
+        .next-steps {
+            background: #f8f9ff;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            text-align: left;
+        }
+
+        .next-steps h3 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+        }
+
+        .next-steps ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .next-steps li {
+            padding: 0.5rem 0;
+            color: #4a5568;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .next-steps li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 15px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(238, 90, 36, 0.3);
+            margin: 1rem 0.5rem;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(238, 90, 36, 0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 769px) {
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .nav-links {
+                display: none !important;
+            }
+            
+            .mobile-menu-toggle {
+                display: block !important;
+            }
+            
+            .question-container {
+                padding: 1.5rem;
+            }
+            
+            .navigation-buttons {
+                flex-direction: column;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">Finally Understanding</a>
+            <ul class="nav-links">
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle menu">☰</button>
+            <div class="mobile-menu" id="mobileMenu">
+                <a href="about.html">About</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <section class="header">
+        <div class="container">
+            <h1>Find Your Personal Roadblock</h1>
+            <p class="subtitle">A 10-question diagnostic to identify what's really keeping you stuck</p>
+        </div>
+    </section>
+
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text" id="progressText">Question 1 of 10</div>
+        </div>
+    </div>
+
+    <!-- Assessment Content -->
+    <section class="assessment-container">
+        <div class="container">
+            <!-- Question 1 -->
+            <div class="question-container active" id="question-1">
+                <div class="question-number">Question 1 of 10</div>
+                <h2 class="question-title">What best describes your current weight loss situation?</h2>
+                <p class="question-description">Choose the option that most closely matches your experience.</p>
+                
+                <div class="options-container">
+                    <div class="option" data-value="plateau" onclick="selectOption(this)">
+                        <div class="option-label">🚫 Stuck in a Plateau</div>
+                        <div class="option-description">I've lost weight before but now nothing works - the scale hasn't moved in weeks/months</div>
+                    </div>
+                    <div class="option" data-value="starting" onclick="selectOption(this)">
+                        <div class="option-label">🔄 Starting Over (Again)</div>
+                        <div class="option-description">I've tried multiple approaches and keep falling back into old patterns</div>
+                    </div>
+                    <div class="option" data-value="maintaining" onclick="selectOption(this)">
+                        <div class="option-label">⚖️ Struggling with Maintenance</div>
+                        <div class="option-description">I can lose weight but always gain it back within months</div>
+                    </div>
+                    <div class="option" data-value="confused" onclick="selectOption(this)">
+                        <div class="option-label">🤔 Overwhelmed by Options</div>
+                        <div class="option-description">I know the science but can't figure out what approach will work for me</div>
+                    </div>
+                </div>
+                
+                <div class="navigation-buttons">
+                    <button class="btn btn-secondary" onclick="previousQuestion()" style="visibility: hidden;">Previous</button>
+                    <button class="btn btn-primary" onclick="nextQuestion()" id="nextBtn" disabled>Next</button>
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question-container" id="question-2">
+                <div class="question-number">Question 2 of 10</div>
+                <h2 class="question-title">When you hit a plateau, your first reaction is usually:</h2>
+                <p class="question-description">This helps us understand your psychological approach to setbacks.</p>
+                
+                <div class="options-container">
+                    <div class="option" data-value="harder" onclick="selectOption(this)">
+                        <div class="option-label">💪 "I need to work harder"</div>
+                        <div class="option-description">Cut calories more, add more cardio, be more disciplined</div>
+                    </div>
+                    <div class="option" data-value="failure" onclick="selectOption(this)">
+                        <div class="option-label">😞 "I'm failing again"</div>
+                        <div class="option-description">Self-blame, feeling like you're broken or different</div>
+                    </div>
+                    <div class="option" data-value="analytical" onclick="selectOption(this)">
+                        <div class="option-label">🤔 "Let me figure this out"</div>
+                        <div class="option-description">Research new approaches, analyze what might be wrong</div>
+                    </div>
+                    <div class="option" data-value="frustrated" onclick="selectOption(this)">
+                        <div class="option-label">😤 "This is so unfair"</div>
+                        <div class="option-description">Anger at your body, genetics, or the process</div>
+                    </div>
+                </div>
+                
+                <div class="navigation-buttons">
+                    <button class="btn btn-secondary" onclick="previousQuestion()">Previous</button>
+                    <button class="btn btn-primary" onclick="nextQuestion()" disabled>Next</button>
+                </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question-container" id="question-3">
+                <div class="question-number">Question 3 of 10</div>
+                <h2 class="question-title">Your biggest struggle with food is:</h2>
+                <p class="question-description">Understanding your eating patterns helps identify the root barriers.</p>
+                
+                <div class="options-container">
+                    <div class="option" data-value="emotional" onclick="selectOption(this)">
+                        <div class="option-label">🍕 Emotional/Stress Eating</div>
+                        <div class="option-description">Using food to cope with emotions, boredom, or stress</div>
+                    </div>
+                    <div class="option" data-value="obsessive" onclick="selectOption(this)">
+                        <div class="option-label">📊 Obsessing Over Every Detail</div>
+                        <div class="option-description">Counting every calorie, macro, weighing daily, perfectionism</div>
+                    </div>
+                    <div class="option" data-value="allnothing" onclick="selectOption(this)">
+                        <div class="option-label">🚫 All-or-Nothing Thinking</div>
+                        <div class="option-description">Perfect adherence or complete abandonment, no middle ground</div>
+                    </div>
+                    <div class="option" data-value="mindless" onclick="selectOption(this)">
+                        <div class="option-label">😴 Mindless/Habitual Eating</div>
+                        <div class="option-description">Eating out of routine, distraction, or without awareness</div>
+                    </div>
+                </div>
+                
+                <div class="navigation-buttons">
+                    <button class="btn btn-secondary" onclick="previousQuestion()">Previous</button>
+                    <button class="btn btn-primary" onclick="nextQuestion()" disabled>Next</button>
+                </div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question-container" id="question-4">
+                <div class="question-number">Question 4 of 10</div>
+                <h2 class="question-title">How do you typically handle setbacks or "bad" eating days?</h2>
+                <p class="question-description">Your recovery patterns reveal a lot about sustainable success.</p>
+                
+                <div class="options-container">
+                    <div class="option" data-value="spiral" onclick="selectOption(this)">
+                        <div class="option-label">📉 It becomes a spiral</div>
+                        <div class="option-description">One bad meal turns into a bad day, week, or month</div>
+                    </div>
+                    <div class="option" data-value="punish" onclick="selectOption(this)">
+                        <div class="option-label">⚡ Punishment mode</div>
+                        <div class="option-description">Extreme restriction, extra workouts, guilt and shame</div>
+                    </div>
+                    <div class="option" data-value="quit" onclick="selectOption(this)">
+                        <div class="option-label">🏳️ Just give up</div>
+                        <div class="option-description">Abandon the plan entirely and "start fresh" later</div>
+                    </div>
+                    <div class="option" data-value="bounce" onclick="selectOption(this)">
+                        <div class="option-label">🔄 Get back on track</div>
+                        <div class="option-description">Learn from it and continue without major drama</div>
+                    </div>
+                </div>
+                
+                <div class="navigation-buttons">
+                    <button class="btn btn-secondary" onclick="previousQuestion()">Previous</button>
+                    <button class="btn btn-primary" onclick="nextQuestion()" disabled>Next</button>
+                </div>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="question-container" id="question-5">
+                <div class="question-number">Question 5 of 10</div>
+                <h2 class="question-title">What's your relationship with the scale?</h2>
+                <p class="question-description">Scale habits often reflect deeper psychological patterns.</p>
+                
+                <div class="options-container">
+                    <div class="option" data-value="obsessed" onclick="selectOption(this)">
+                        <div class="option-label">📏 Daily weighing, mood depends on number</div>
+                        <div class="option-description">The scale controls how you feel about yourself and your day</div>
+                    </div>
+                    <div class="option" data-value="avoidant" onclick="selectOption(this)">
+                        <div class="option-label">🙈 Avoid it completely</div>
+                        <div class="option-description">Too scary or triggering to weigh yourself regularly</div>
+                    </div>
+                    <div class="option" data-value="frustrated" onclick="selectOption(this)">
+                        <div class="option-label">😤 Frustrated by fluctuations</div>
+                        <div class="option-description">Know weight varies but still get upset by daily changes</div>
+                    </div>
+                    <div class="option" data-value="tool" onclick="selectOption(this)">
+                        <div class="option-label">🔧 Use it as one tool among many</div>
+                        <div class="option-description">Track trends without emotional attachment to daily numbers</div>
+                    </div>
+                </div>
+                
+                <div class="navigation-buttons">
+                    <button class="btn btn-secondary" onclick="previousQuestion()">Previous</button>
+                    <button class="btn btn-primary" onclick="nextQuestion()" disabled>Next</button>
+                </div>
+            </div>
+
+            <!-- Question 6 -->
+            <div class="question-container" id="question-6">
+                <div class="question-number">Question 6 of 10</div>
+                <h2 class="question-title">How long do you typically stick to a new weight loss approach?</h2>
+                <p class="question-description">This reveals patterns about sustainability and expectations.</p>
+                
+                <div class="options-container">
+                    <div class="option" data-value="days" onclick="selectOption(this)">
+                        <div class="option-label">⏱️ Days to 2 weeks</div>
+                        <div class="option-description">Start strong but motivation fades quickly when results don't come fast enough</div>
+                    </div>
+                    <div class="option" data-value="months" onclick="selectOption(this)">
+                        <div class="option-label">📅 1-3 months</div>
+                        <div class="option-description">Do well initially but hit obstacles and abandon the approach</div>
+                    </div>
+                    <div class="option" data-value="cycles" onclick="selectOption(this)">
+                        <div class="option-label">🔄 On and off for months/years</div>
+                        <div class="option-description">Keep returning to the same approach with breaks in between</div>
+                    </div>
+                    <div class="option" data-value="longterm" onclick="selectOption(this)">
+                        <div class="option-label">📈 6+ months consistently</div>
+                        <div class="option-description">Generally stick to approaches but still struggle with specific barriers</div>
+                    </div>
+                </div>
+                
+                <div class="navigation-buttons">
+                    <button class="btn btn-secondary" onclick="previousQuestion()">Previous</button>
+                    <button class="btn btn-primary" onclick="nextQuestion()" disabled>Next</button>
+                </div>
+            </div>
+
+            <!-- Question 7 -->
+            <div class="question-container" id="question-7">
+                <div class="question-number">Question 7 of 10</div>
+                <h2 class="question-title">What's your biggest source of motivation?</h2>
+                <p class="question-description">Understanding what drives you helps identify sustainable approaches.</p>
+                
+                <div class="options-container">
+                    <div class="option" data-value="appearance" onclick="selectOption(this)">
+                        <div class="option-label">👗 Looking better/fitting clothes</div>
+                        <div class="option-description">Visual changes, compliments, feeling confident in photos</div>
+                    </div>
+                    <div class="option" data-value="health" onclick="selectOption(this)">
+                        <div class="option-label">💪 Health and energy improvements</div>
+                        <div class="option-description">Better sleep, energy, strength, avoiding health problems</div>
+                    </div>
+                    <div class="option" data-value="control" onclick="selectOption(this)">
+                        <div class="option-label">🎯 Proving I can do it</div>
+                        <div class="option-description">Personal achievement, self-discipline, reaching goals</div>
+                    </div>
+                    <div class="option" data-value="life" onclick="selectOption(this)">
+                        <div class="option-label">🌟 Living life fully</div>
+                        <div class="option-description">Participating in activities, travel, being present for family</div>
+                    </div>
+                </div>
+                
+                <div class="navigation-buttons">
+                    <button class="btn btn-secondary" onclick="previousQuestion()">Previous</button>
+                    <button class="btn btn-primary" onclick="nextQuestion()" disabled>Next</button>
+                </div>
+            </div>
+
+            <!-- Question 8 -->
+            <div class="question-container" id="question-8">
+                <div class="question-number">Question 8 of 10</div>
+                <h2 class="question-title">When you think about your past weight loss attempts, what pattern do you notice?</h2>
+                <p class="question-description">Recognizing patterns helps identify what needs to change this time.</p>
+                
+                <div class="options-container">
+                    <div class="option" data-value="extremes" onclick="selectOption(this)">
+                        <div class="option-label">🎢 Go too extreme, burn out, quit</div>
+                        <div class="option-description">Start with unsustainable restrictions that work short-term but can't maintain</div>
+                    </div>
+                    <div class="option" data-value="circumstances" onclick="selectOption(this)">
+                        <div class="option-label">🌪️ Derailed by life circumstances</div>
+                        <div class="option-description">Do well until stress, travel, holidays, or life changes disrupt everything</div>
+                    </div>
+                    <div class="option" data-value="knowledge" onclick="selectOption(this)">
+                        <div class="option-label">🤓 Know what to do but can't stick to it</div>
+                        <div class="option-description">Have the information and plans but struggle with consistent implementation</div>
+                    </div>
+                    <div class="option" data-value="plateau" onclick="selectOption(this)">
+                        <div class="option-label">🛑 Hit plateaus and give up</div>
+                        <div class="option-description">Make initial progress but when weight loss slows or stops, abandon the effort</div>
+                    </div>
+                </div>
+                
+                <div class="navigation-buttons">
+                    <button class="btn btn-secondary" onclick="previousQuestion()">Previous</button>
+                    <button class="btn btn-primary" onclick="nextQuestion()" disabled>Next</button>
+                </div>
+            </div>
+
+            <!-- Question 9 -->
+            <div class="question-container" id="question-9">
+                <div class="question-number">Question 9 of 10</div>
+                <h2 class="question-title">How do you feel about the weight loss process itself?</h2>
+                <p class="question-description">Your attitude toward the journey affects long-term success.</p>
+                
+                <div class="options-container">
+                    <div class="option" data-value="battle" onclick="selectOption(this)">
+                        <div class="option-label">⚔️ It's a constant battle</div>
+                        <div class="option-description">Fighting cravings, willpower, my body - feels like warfare</div>
+                    </div>
+                    <div class="option" data-value="complicated" onclick="selectOption(this)">
+                        <div class="option-label">🧩 It's more complicated than it should be</div>
+                        <div class="option-description">Should be simple but there are so many variables and conflicting advice</div>
+                    </div>
+                    <div class="option" data-value="learning" onclick="selectOption(this)">
+                        <div class="option-label">📚 It's a learning process</div>
+                        <div class="option-description">Experimenting and figuring out what works for my unique situation</div>
+                    </div>
+                    <div class="option" data-value="lifestyle" onclick="selectOption(this)">
+                        <div class="option-label">🌱 It's about building better habits</div>
+                        <div class="option-description">Creating sustainable changes that become part of who I am</div>
+                    </div>
+                </div>
+                
+                <div class="navigation-buttons">
+                    <button class="btn btn-secondary" onclick="previousQuestion()">Previous</button>
+                    <button class="btn btn-primary" onclick="nextQuestion()" disabled>Next</button>
+                </div>
+            </div>
+
+            <!-- Question 10 -->
+            <div class="question-container" id="question-10">
+                <div class="question-number">Question 10 of 10</div>
+                <h2 class="question-title">What would success look like to you beyond just the number on the scale?</h2>
+                <p class="question-description">This final question helps us understand your deeper goals and values.</p>
+                
+                <div class="options-container">
+                    <div class="option" data-value="peace" onclick="selectOption(this)">
+                        <div class="option-label">🕊️ Peace with food and my body</div>
+                        <div class="option-description">Not thinking about food constantly, eating normally without guilt or obsession</div>
+                    </div>
+                    <div class="option" data-value="confidence" onclick="selectOption(this)">
+                        <div class="option-label">✨ Feeling confident and comfortable</div>
+                        <div class="option-description">Not avoiding photos, social events, or activities because of body shame</div>
+                    </div>
+                    <div class="option" data-value="energy" onclick="selectOption(this)">
+                        <div class="option-label">⚡ Having energy for what matters</div>
+                        <div class="option-description">Physical and mental energy for family, work, hobbies, and life goals</div>
+                    </div>
+                    <div class="option" data-value="freedom" onclick="selectOption(this)">
+                        <div class="option-label">🆓 Freedom from the weight loss cycle</div>
+                        <div class="option-description">Never having to "start over" again, maintaining changes effortlessly</div>
+                    </div>
+                </div>
+                
+                <div class="navigation-buttons">
+                    <button class="btn btn-secondary" onclick="previousQuestion()">Previous</button>
+                    <button class="btn btn-primary" onclick="nextQuestion()" disabled>Get My Results</button>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-container" id="results">
+                <div class="results-icon">🎯</div>
+                <h2 class="results-title">Your Personal Roadblock Analysis</h2>
+                <p class="results-subtitle">Based on your responses, here's what's likely keeping you stuck and what to do about it.</p>
+                
+                <div class="roadblock-card" id="roadblockCard">
+                    <h3 class="roadblock-title">Your Primary Roadblock: [Will be determined by answers]</h3>
+                    <p class="roadblock-description">Detailed explanation based on their specific answers...</p>
+                </div>
+                
+                <div class="secondary-barriers" id="secondaryBarriers">
+                    <h3>Secondary Barriers to Address:</h3>
+                    <ul id="secondaryList">
+                        <li>Secondary barrier 1</li>
+                        <li>Secondary barrier 2</li>
+                    </ul>
+                </div>
+                
+                <div class="next-steps">
+                    <h3>Your Personalized Action Plan:</h3>
+                    <ul id="nextStepsList">
+                        <li>Personalized recommendation 1</li>
+                        <li>Personalized recommendation 2</li>
+                        <li>Personalized recommendation 3</li>
+                        <li>Personalized recommendation 4</li>
+                    </ul>
+                </div>
+                
+                <!-- Aca tendrias que poner la URL de la oferta en vez de index.html -->
+                <a href="index.html" class="cta-button">Explore Solutions</a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        let currentQuestion = 1;
+        const totalQuestions = 10;
+        let answers = {};
+
+        function selectOption(element) {
+            // Remove selected class from all options in this question
+            const questionContainer = element.closest('.question-container');
+            const allOptions = questionContainer.querySelectorAll('.option');
+            allOptions.forEach(opt => opt.classList.remove('selected'));
+            
+            // Add selected class to clicked option
+            element.classList.add('selected');
+            
+            // Store the answer
+            answers[`question${currentQuestion}`] = element.getAttribute('data-value');
+            
+            // Enable next button
+            const nextBtn = questionContainer.querySelector('.btn-primary');
+            nextBtn.disabled = false;
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < totalQuestions) {
+                // Hide current question
+                document.getElementById(`question-${currentQuestion}`).classList.remove('active');
+                
+                // Show next question
+                currentQuestion++;
+                document.getElementById(`question-${currentQuestion}`).classList.add('active');
+                
+                // Update progress
+                updateProgress();
+                
+                // Reset next button state
+                const nextBtn = document.querySelector('#question-' + currentQuestion + ' .btn-primary');
+                if (nextBtn) {
+                    nextBtn.disabled = !answers[`question${currentQuestion}`];
+                }
+            } else {
+                // Show results
+                showResults();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 1) {
+                // Hide current question
+                document.getElementById(`question-${currentQuestion}`).classList.remove('active');
+                
+                // Show previous question
+                currentQuestion--;
+                document.getElementById(`question-${currentQuestion}`).classList.add('active');
+                
+                // Update progress
+                updateProgress();
+            }
+        }
+
+        function updateProgress() {
+            const progress = (currentQuestion / totalQuestions) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressText').textContent = `Question ${currentQuestion} of ${totalQuestions}`;
+        }
+
+        function showResults() {
+            // Hide current question and progress
+            document.getElementById(`question-${currentQuestion}`).classList.remove('active');
+            document.querySelector('.progress-container').style.display = 'none';
+            
+            // Show results
+            document.getElementById('results').classList.add('active');
+            
+            // Analyze answers and show personalized results
+            analyzeAnswers();
+            
+            // Update progress to 100%
+            document.getElementById('progressFill').style.width = '100%';
+            document.getElementById('progressText').textContent = 'Assessment Complete!';
+        }
+
+        function analyzeAnswers() {
+            let primaryRoadblock = '';
+            let description = '';
+            let nextSteps = [];
+            let secondaryBarriers = [];
+            
+            // Primary analysis based on eating patterns (question 3)
+            if (answers.question3 === 'emotional') {
+                primaryRoadblock = 'Emotional Eating Patterns';
+                description = 'You use food as a coping mechanism for stress, emotions, or boredom. This creates a cycle where emotional triggers override your logical eating plans, making sustainable weight loss feel impossible. Your relationship with food is deeply connected to your emotional state, which means traditional "willpower" approaches won\'t work long-term.';
+                nextSteps = [
+                    'Learn alternative stress management techniques (deep breathing, meditation, journaling)',
+                    'Identify your specific emotional eating triggers and times of day',
+                    'Create a "emotional eating emergency kit" with non-food coping strategies',
+                    'Practice mindful eating to reconnect with hunger and fullness cues',
+                    'Consider working with a therapist who specializes in emotional eating'
+                ];
+            } else if (answers.question3 === 'allnothing') {
+                primaryRoadblock = 'All-or-Nothing Thinking';
+                description = 'You operate in extremes - either perfect adherence or complete abandonment. This perfectionist mindset makes it impossible to handle normal setbacks and creates unsustainable pressure. You likely restart your diet every Monday and view any deviation as complete failure.';
+                nextSteps = [
+                    'Practice the "80/20 rule" - aim for consistency, not perfection',
+                    'Redefine success to include "good enough" days and quick recoveries',
+                    'Learn to course-correct quickly after setbacks without abandoning everything',
+                    'Focus on building sustainable habits rather than perfect execution',
+                    'Develop self-compassion practices to reduce shame spirals'
+                ];
+            } else if (answers.question3 === 'obsessive') {
+                primaryRoadblock = 'Analysis Paralysis & Perfectionism';
+                description = 'You know too much and try to control every variable. This creates mental exhaustion and often leads to abandoning plans when perfection becomes unsustainable. You likely spend more time researching and planning than actually implementing.';
+                nextSteps = [
+                    'Simplify your approach to focus on just 1-2 key habits at a time',
+                    'Practice intuitive eating alongside structured planning',
+                    'Set "good enough" standards instead of perfect ones',
+                    'Take regular breaks from tracking and measuring everything',
+                    'Focus on building systems rather than hitting exact numbers'
+                ];
+            } else {
+                primaryRoadblock = 'Mindless Eating Patterns';
+                description = 'You eat on autopilot without awareness of hunger, fullness, or choice. This disconnection makes it hard to make intentional food decisions that support your goals. You likely eat out of habit, distraction, or environmental cues rather than true hunger.';
+                nextSteps = [
+                    'Practice mindful eating techniques - slow down and pay attention during meals',
+                    'Create environmental cues for better choices (prep healthy snacks, remove triggers)',
+                    'Build awareness of true hunger and satiety signals',
+                    'Eliminate distractions during meals (TV, phone, computer)',
+                    'Use smaller plates and portion awareness strategies'
+                ];
+            }
+
+            // Add secondary barriers based on other answers
+            if (answers.question2 === 'failure') {
+                secondaryBarriers.push('Self-blame and negative self-talk when facing setbacks');
+            }
+            if (answers.question4 === 'spiral') {
+                secondaryBarriers.push('Difficulty recovering from setbacks - one bad choice becomes a bad week');
+            }
+            if (answers.question5 === 'obsessed') {
+                secondaryBarriers.push('Over-reliance on the scale for self-worth and progress measurement');
+            }
+            if (answers.question6 === 'days') {
+                secondaryBarriers.push('Unrealistic expectations about timeline and speed of results');
+            }
+            if (answers.question8 === 'extremes') {
+                secondaryBarriers.push('Tendency to choose unsustainable approaches that lead to burnout');
+            }
+            if (answers.question9 === 'battle') {
+                secondaryBarriers.push('Adversarial relationship with your body and the weight loss process');
+            }
+
+            // Adjust recommendations based on motivation style (question 7)
+            if (answers.question7 === 'appearance') {
+                nextSteps.push('Track non-scale victories like how clothes fit and energy levels');
+            } else if (answers.question7 === 'health') {
+                nextSteps.push('Focus on health metrics beyond weight (sleep quality, energy, strength)');
+            } else if (answers.question7 === 'control') {
+                nextSteps.push('Set process goals (habits) rather than just outcome goals (weight loss)');
+            } else if (answers.question7 === 'life') {
+                nextSteps.push('Connect your habits to your values and what you want to do in life');
+            }
+
+            // Update the results display
+            document.querySelector('.roadblock-title').textContent = `Your Primary Roadblock: ${primaryRoadblock}`;
+            document.querySelector('.roadblock-description').textContent = description;
+            
+            // Update secondary barriers
+            const secondaryList = document.getElementById('secondaryList');
+            secondaryList.innerHTML = '';
+            secondaryBarriers.forEach(barrier => {
+                const li = document.createElement('li');
+                li.textContent = barrier;
+                secondaryList.appendChild(li);
+            });
+
+            // Hide secondary barriers section if empty
+            if (secondaryBarriers.length === 0) {
+                document.getElementById('secondaryBarriers').style.display = 'none';
+            }
+            
+            // Update next steps
+            const stepsList = document.getElementById('nextStepsList');
+            stepsList.innerHTML = '';
+            nextSteps.forEach(step => {
+                const li = document.createElement('li');
+                li.textContent = step;
+                stepsList.appendChild(li);
+            });
+        }
+
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('show');
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const toggleButton = document.querySelector('.mobile-menu-toggle');
+            
+            if (mobileMenu && toggleButton) {
+                if (!mobileMenu.contains(e.target) && !toggleButton.contains(e.target)) {
+                    mobileMenu.classList.remove('show');
+                }
+            }
+        });
+
+        // Initialize progress bar
+        updateProgress();
+    </script>
+</body>
+</html>

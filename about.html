@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Finally Understanding</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #2c2c2c;
+            background: #f8f9ff;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #4a5568;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #4a5568;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 120px 0 80px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Main Content */
+        .main-content {
+            background: white;
+            padding: 60px 0;
+        }
+
+        .content-section {
+            margin-bottom: 3rem;
+        }
+
+        .content-section h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 1.5rem;
+            border-left: 5px solid #667eea;
+            padding-left: 1rem;
+        }
+
+        .content-section h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #4a5568;
+            margin: 2rem 0 1rem 0;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            color: #4a5568;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            font-style: italic;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        .insight-box {
+            background: #f8f9ff;
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-left: 5px solid #667eea;
+        }
+
+        .insight-box h4 {
+            color: #2d3748;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .list-style {
+            padding-left: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .list-style li {
+            margin-bottom: 0.8rem;
+            color: #4a5568;
+            line-height: 1.7;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, #2d3748, #4a5568);
+            color: white;
+            padding: 3rem;
+            border-radius: 20px;
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        .cta-section h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .cta-section p {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 15px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(238, 90, 36, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(238, 90, 36, 0.4);
+        }
+
+        .quote {
+            font-style: italic;
+            font-size: 1.2rem;
+            color: #667eea;
+            text-align: center;
+            margin: 2rem 0;
+            padding: 1rem;
+            border-left: 4px solid #667eea;
+            background: #f8f9ff;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a202c;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        footer p {
+            opacity: 0.7;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .header .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .content-section h2 {
+                font-size: 1.6rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.8s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">Finally Understanding</a>
+            <ul class="nav-links">
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <section class="header">
+        <div class="container">
+            <h1 class="fade-in">The Person Behind the Site</h1>
+            <p class="subtitle fade-in">My journey from chronic yo-yo dieter to understanding what actually works</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="main-content">
+        <div class="container">
+            
+            <div class="content-section">
+                <h2>I Know What It's Like</h2>
+                <p>I know what it's like to hit your goal weight and celebrate... only to watch the scale creep back up six months later. I know the shame of buying trigger foods while promising yourself you won't eat them. I know the exhaustion of starting over every Monday for years.</p>
+                
+                <p>I've been the person who could quote every weight loss study but couldn't stop emotional eating. The one who gave great advice to friends while secretly bingeing at night. The one who "knew better" but somehow couldn't do better.</p>
+
+                <div class="highlight-box">
+                    "If one more person tells me weight loss is 'simple,' I might lose it completely."
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2>My 15-Year Struggle</h2>
+                <p>My weight loss journey started like most others—with hope, determination, and a belief that this time would be different. I tried everything:</p>
+                
+                <ul class="list-style">
+                    <li><strong>Every popular diet:</strong> Keto, paleo, intermittent fasting, macro counting, meal replacement shakes</li>
+                    <li><strong>Extreme approaches:</strong> 1200-calorie diets, two-a-day workouts, cutting entire food groups</li>
+                    <li><strong>All the apps:</strong> MyFitnessPal, LoseIt, Fitbit challenges, step counters</li>
+                    <li><strong>Professional help:</strong> Nutritionists, personal trainers, weight loss programs</li>
+                </ul>
+
+                <p>And you know what? <em>Some of it worked.</em> I lost weight multiple times. I had success stories. I got compliments. I bought smaller clothes.</p>
+
+                <p>But I also gained it back. Every. Single. Time.</p>
+
+                <div class="insight-box">
+                    <h4>The Breaking Point</h4>
+                    <p>The moment that changed everything was when I realized I was spending more mental energy on food and weight than on my career, relationships, and actual life goals combined. I was living in a prison of my own making.</p>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2>What I Discovered</h2>
+                <p>After years of treating symptoms instead of causes, I started digging into the research on metabolic adaptation, food psychology, and behavior change. What I found changed everything:</p>
+
+                <h3>The Biology Was Real</h3>
+                <p>My body wasn't "broken"—it was doing exactly what evolution designed it to do. Metabolic adaptation, hormonal changes, and increased hunger after weight loss aren't character flaws. They're survival mechanisms.</p>
+
+                <h3>The Psychology Was Everything</h3>
+                <p>All the meal plans in the world won't help if you're using food to cope with stress, shame, boredom, or anxiety. I had to address why I was eating, not just what I was eating.</p>
+
+                <h3>The Community Mattered</h3>
+                <p>The most helpful support came from people who had walked the same path. Not fitness influencers who made it look easy, but real people who understood the day-to-day struggles.</p>
+
+                <div class="quote">
+                    "The problem wasn't that I lacked willpower. The problem was that I was fighting biology with willpower alone."
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2>Why I Created This Space</h2>
+                <p>After finding approaches that actually worked for sustainable change, I realized how much misinformation and oversimplification exists in the weight loss world. Most advice treats complex psychological and biological challenges as simple motivation problems.</p>
+
+                <p>I wanted to create the resource I wish I'd had 10 years ago:</p>
+
+                <ul class="list-style">
+                    <li><strong>Honest about the difficulty:</strong> This isn't simple, and pretending it is helps no one</li>
+                    <li><strong>Psychology-focused:</strong> Addressing the mental barriers that keep people stuck</li>
+                    <li><strong>Evidence-based:</strong> Real research, not marketing-driven pseudoscience</li>
+                    <li><strong>Community-driven:</strong> Support from people who actually understand the struggle</li>
+                    <li><strong>Advanced strategies:</strong> Solutions for people who already know the basics</li>
+                </ul>
+            </div>
+
+            <div class="content-section">
+                <h2>What You Can Expect Here</h2>
+                
+                <h3>No False Promises</h3>
+                <p>I won't tell you weight loss is easy, quick, or simple. I won't promise you'll never struggle again. What I will do is provide strategies that acknowledge the real challenges and work with your biology, not against it.</p>
+
+                <h3>Advanced, Not Basic</h3>
+                <p>You already know about calories in vs. calories out. You don't need another explanation of portion control. You need strategies for what to do when that knowledge isn't enough.</p>
+
+                <h3>Community Support</h3>
+                <p>Connect with others who understand that this journey is complex, personal, and challenging. No judgment about past "failures" or current struggles.</p>
+
+                <div class="insight-box">
+                    <h4>A Note on Professional Help</h4>
+                    <p>While I share strategies that have helped me and many others, I'm not a medical or mental health professional. If you're dealing with eating disorders, severe depression, or other clinical issues, please seek appropriate professional support. This site is meant to complement, not replace, professional care when needed.</p>
+                </div>
+            </div>
+
+
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>© 2025 Finally Understanding. Evidence-based strategies for sustainable weight loss.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.content-section, .cta-section').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
